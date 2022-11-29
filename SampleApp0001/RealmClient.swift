@@ -1,0 +1,43 @@
+//
+//  RealmClient.swift
+//  SampleApp0001
+//
+//  Created by cmStudent on 2022/08/26.
+//
+
+import Foundation
+import RealmSwift
+import Realm
+
+class RealmClient<T: Object> {
+    static func add(object: T) {
+        do {
+            let realm = try Realm()
+            try realm.write {
+                realm.add(object)
+            }
+        } catch {
+            fatalError("\(error.localizedDescription)")
+        }
+    }
+    
+    static func find() -> [T] {
+        do {
+            let realm = try Realm()
+            
+            return Array(realm.objects(T.self).sorted(byKeyPath: "result", ascending: false))
+        } catch {
+            fatalError("\(error.localizedDescription)")
+        }
+    }
+    
+    static func index() -> Int {
+        do {
+            let realm = try Realm()
+            
+            return Array(realm.objects(T.self).sorted(byKeyPath: "result", ascending: false)).count
+        } catch {
+            fatalError("\(error.localizedDescription)")
+        }
+    }
+}
