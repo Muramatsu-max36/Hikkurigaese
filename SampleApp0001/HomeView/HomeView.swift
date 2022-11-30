@@ -25,6 +25,70 @@ struct HomeView: View {
                     .font(.title)
                     .fontWeight(.black)
                 ScrollView {
+                    
+                    
+                    ZStack {
+                        Rectangle()
+                            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 15 * 1)
+                            .foregroundColor(.black)
+                        HStack {
+                            Spacer()
+                            Button {
+                                withAnimation {
+                                    viewModel.switchKind = .one
+                                    viewModel.lode(kind: viewModel.switchKind.rawValue)
+                                }
+                            } label: {
+                                Text("5秒")
+                                    .font(.system(size: 16, weight: .bold, design: .default))
+                                    .foregroundColor(.white)
+                                    .frame(width: UIScreen.main.bounds.width / 7)
+                                
+                            }
+                            Spacer()
+                            Button {
+                                withAnimation {
+                                    viewModel.switchKind = .two
+                                    viewModel.lode(kind: viewModel.switchKind.rawValue)
+                                }
+                            } label: {
+                                Text("10秒")
+                                    .font(.system(size: 16, weight: .bold, design: .default))
+                                    .foregroundColor(.white)
+                                    .frame(width: UIScreen.main.bounds.width / 7)
+                                
+                            }
+                            Spacer()
+                            Button {
+                                withAnimation {
+                                    viewModel.switchKind = .three
+                                    viewModel.lode(kind: viewModel.switchKind.rawValue)
+                                }
+                            } label: {
+                                Text("20秒")
+                                    .font(.system(size: 16, weight: .bold, design: .default))
+                                    .foregroundColor(.white)
+                                    .frame(width: UIScreen.main.bounds.width / 7)
+                                
+                            }
+                            Spacer()
+                        }
+                        .padding(.bottom)
+                        
+                        VStack {
+                            Spacer()
+                                .frame(height: UIScreen.main.bounds.height / 50)
+                            Rectangle()
+                                .frame(width: UIScreen.main.bounds.width / 6, height: UIScreen.main.bounds.height / 80)
+                                .cornerRadius(30)
+                                .foregroundColor(.white)
+                                .offset(x: viewModel.switchKind == .one ? -UIScreen.main.bounds.width / 3.5  : viewModel.switchKind == .two ? 0 : UIScreen.main.bounds.width / 3.5 , y: 0)
+                        }
+                        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 15 * 2)
+                        
+                    }
+                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 15 * 2)
+                    
                     VStack {
                         ForEach(0 ..< viewModel.rankings.count, id: \.self) { num in
                             if num < 5 {
@@ -42,7 +106,7 @@ struct HomeView: View {
                             }
                         }
                         .onAppear {
-                            viewModel.lode()
+                            viewModel.lode(kind: viewModel.switchKind.rawValue)
                         }
                         if viewModel.rankings.count > 5 {
                             if viewModel.isRanking {
@@ -68,7 +132,7 @@ struct HomeView: View {
                     }
                     
                 }
-                .frame(width: CGFloat(UIScreen.main.bounds.width - 40.0), height: CGFloat(UIScreen.main.bounds.height - 520.0))
+                .frame(width: CGFloat(UIScreen.main.bounds.width / 13 * 12), height: CGFloat(UIScreen.main.bounds.height / 2))
             }
             
             Spacer()
@@ -89,7 +153,7 @@ struct HomeView: View {
             .fullScreenCover(isPresented: $viewModel.isSetting, onDismiss: {
                 viewModel.name = ""
                 viewModel.kindValue = .one
-                viewModel.lode()
+                viewModel.lode(kind: viewModel.switchKind.rawValue)
             }) {
                 SettingView(viewModel: viewModel)
             }

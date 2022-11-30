@@ -8,28 +8,29 @@
 import Foundation
 
 class HomeViewModel : ObservableObject {
+    
     @Published var isShowGameView : Bool = false
     @Published var isShowAlert : Bool = false
     @Published var name = ""
     typealias Client = RealmClient<Ranking>
-    @Published var rankings : [Ranking] = Client.find()
+    @Published var rankings : [Ranking] = Client.kindFind(kind: 1)
     var rankingNumber : [Int] = []
     @Published var rankingIndex = 0
     @Published var isRanking = false
     @Published var kindValue: kind = .one
     @Published var isSetting = false
-    
+    @Published var switchKind: kind = .one
     init() {
-        lode()
+        lode(kind: switchKind.rawValue)
         print(rankings)
     }
     
-    func lode() {
+    func lode(kind: Int) {
         rankingIndex = 0
         
         rankingNumber = []
-        self.rankings = Client.find()
-        for i in 0..<Client.index() {
+        self.rankings = Client.kindFind(kind: kind)
+        for i in 0..<Client.index(kind: switchKind.rawValue) {
             rankingIndex += 1
             if i != 0 && rankings[i - 1].result == rankings[i].result {
                 for n in 2...(i + 1) {

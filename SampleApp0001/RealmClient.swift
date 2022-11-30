@@ -31,11 +31,21 @@ class RealmClient<T: Object> {
         }
     }
     
-    static func index() -> Int {
+    static func kindFind(kind: Int) -> [T] {
         do {
             let realm = try Realm()
             
-            return Array(realm.objects(T.self).sorted(byKeyPath: "result", ascending: false)).count
+            return Array(realm.objects(T.self).filter("kind == \(kind)").sorted(byKeyPath: "result", ascending: false))
+        } catch {
+            fatalError("\(error.localizedDescription)")
+        }
+    }
+    
+    static func index(kind: Int) -> Int {
+        do {
+            let realm = try Realm()
+            
+            return Array(realm.objects(T.self).filter("kind == \(kind)").sorted(byKeyPath: "result", ascending: false)).count
         } catch {
             fatalError("\(error.localizedDescription)")
         }

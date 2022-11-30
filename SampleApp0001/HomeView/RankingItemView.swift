@@ -24,27 +24,27 @@ struct RankingItemView: View {
     var body: some View {
         HStack {
             Text(rankingNumber)
+                .lineLimit(1)
                 .font(.system(size: 20, weight: .black, design: .default))
-                .frame(alignment: .leading)
+                .frame(width: UIScreen.main.bounds.width / 10, alignment: .leading)
                 .padding()
-            
-            Spacer()
+        
             Text(date.prefix(19))
                 .foregroundColor(.gray)
                 .font(.system(size: 12, weight: .regular, design: .default))
-                .frame(alignment: .leading)
+                .frame(width: UIScreen.main.bounds.width / 5, alignment: .leading)
                 .padding()
-
-            Spacer()
+            
             Text(name)
+                .lineLimit(1)
                 .font(.system(size: 16, weight: .regular, design: .default))
-                .frame(alignment: .leading)
+                .frame(width: UIScreen.main.bounds.width / 5, alignment: .leading)
                 .padding()
-
-            Spacer()
+            
             Text(resultNumber)
+                .lineLimit(1)
                 .font(.system(size: 16, weight: .regular, design: .default))
-                .frame(alignment: .leading)
+                .frame(width: UIScreen.main.bounds.width / 8, alignment: .leading)
                 .padding()
         }
     }
